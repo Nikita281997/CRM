@@ -34,8 +34,15 @@
     PreparedStatement pstmt = null;
 
     try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+       String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
 
         String newStatus = "restore".equals(action) ? "yes" : "no";
         String sql = "UPDATE leads SET yesno_status = ? WHERE lead_id = ? AND company_id = ?";

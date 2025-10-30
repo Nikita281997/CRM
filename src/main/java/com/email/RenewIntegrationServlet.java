@@ -50,9 +50,15 @@ public class RenewIntegrationServlet extends HttpServlet {
                // Calculate expiry date by adding duration months to buy date
                LocalDate expiryDate = buyDate.plusMonths(duration);
 
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
 
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(url, user, pass);
             // Check if the service belongs to the logged-in company
             String selectSQL = "SELECT expiry_date FROM integrations WHERE id = ? AND company_id = ?";
             pstmt = conn.prepareStatement(selectSQL);
@@ -84,7 +90,7 @@ public class RenewIntegrationServlet extends HttpServlet {
 
             // Renew the integration
             LocalDate renewalDate = LocalDate.now();
-            LocalDate newExpiryDate = renewalDate.plus(1, ChronoUnit.YEARS);
+            
 
             String updateSQL = "UPDATE integrations SET renewal_charge = ?, renewal_date = ?, expiry_date = ? WHERE id = ? AND company_id = ?";
             pstmt = conn.prepareStatement(updateSQL);

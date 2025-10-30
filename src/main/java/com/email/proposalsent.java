@@ -18,10 +18,8 @@ public class proposalsent extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int leadId = Integer.parseInt(request.getParameter("leadId"));
       
-//"jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI"
-        String dbURL = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb";
-        String dbUser = "atharva";
-        String dbPassword = "AVNS_SFoivcl39tz_B7wqssI";
+
+      
 
         Connection conn = null;
         PreparedStatement pstmtFetch = null;
@@ -29,8 +27,15 @@ public class proposalsent extends HttpServlet {
         PreparedStatement pstmtDelete = null;
 
         try {
+             String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection(dbURL, dbUser, dbPassword);
+            conn = DriverManager.getConnection(url, user, pass);
 
             // Fetch lead details from 'connected' table
             String fetchSql = "SELECT * FROM connected WHERE lead_id = ?";

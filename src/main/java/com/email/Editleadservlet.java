@@ -29,14 +29,19 @@ public class Editleadservlet extends HttpServlet {
             if (sourcePage == null || sourcePage.trim().isEmpty()) {
                 sourcePage = "empdashboared.jsp";
             }
-// "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI"
-            String dbURL = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb";
-            String dbUsername = "atharva";
-            String dbPassword = "AVNS_SFoivcl39tz_B7wqssI";
 
-            try (Connection conn = DriverManager.getConnection(dbURL, dbUsername, dbPassword)) {
-                Class.forName("com.mysql.cj.jdbc.Driver");
 
+            try {
+                String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, user, pass);
+                
                 StringBuilder query = new StringBuilder("UPDATE leads SET ");
                 boolean firstField = true;
 
@@ -99,8 +104,8 @@ public class Editleadservlet extends HttpServlet {
                         response.sendRedirect(sourcePage);
                     }
                 }
-            }
-        } catch (SQLException e) {
+            
+            } catch (SQLException e) {
             e.printStackTrace();
             sessionVar.setAttribute("popupMessage", "Database error: " + e.getMessage());
             sessionVar.setAttribute("popupType", "error");
@@ -119,4 +124,8 @@ public class Editleadservlet extends HttpServlet {
             response.sendRedirect("empdashboared.jsp");
         }
     }
+    catch (Exception e) {
+            e.printStackTrace();}
+    }
 }
+

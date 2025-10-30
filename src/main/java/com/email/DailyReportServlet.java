@@ -34,8 +34,15 @@ public class DailyReportServlet extends HttpServlet {
             int leadId = Integer.parseInt(leadIdStr);
 
             System.out.println("Connecting to database...");
+  String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI")) {
+            try (Connection con = DriverManager.getConnection(url, user, pass)) {
                 String query = "SELECT report_id, report_date, report_content FROM daily_reports " +
                               "WHERE company_id = ? AND lead_id = ? ORDER BY report_date DESC";
                 

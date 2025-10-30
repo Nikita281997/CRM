@@ -31,9 +31,15 @@ public class paymentWebhook extends HttpServlet {
 
         if ("SUCCESS".equalsIgnoreCase(paymentStatus)) {
             try {
-                // Database connection
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection con = DriverManager.getConnection(url, user, pass);
 
                 // Update payment_status to 1 (paid)
                 String sql = "UPDATE company_registration1 SET payment_status = 1 WHERE company_name = (SELECT company_name FROM company_registration1 WHERE company_name = ? LIMIT 1)";

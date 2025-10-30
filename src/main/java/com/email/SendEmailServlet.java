@@ -24,6 +24,8 @@ public class SendEmailServlet extends HttpServlet {
         String subject = request.getParameter("subject");
         String messageText = request.getParameter("message");
 
+
+
         // Validate inputs
         if (recipientEmail == null || recipientEmail.trim().isEmpty() ||
             subject == null || subject.trim().isEmpty() ||
@@ -33,7 +35,22 @@ public class SendEmailServlet extends HttpServlet {
         }
 
         // Insert email details into the 'sent' table
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+        String host = System.getenv("DB_HOST");
+        String port = System.getenv("DB_PORT");
+        String dbName = System.getenv("DB_NAME");
+        String user = System.getenv("DB_USER");
+        String pass = System.getenv("DB_PASS");
+
+        String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            out.println("<script>alert('Database Driver Error: " + e.getMessage() + "'); window.location='email.jsp';</script>");
+            return;
+        }
+
+        try (Connection con = DriverManager.getConnection(url, user, pass);
              PreparedStatement insertStmt = con.prepareStatement("INSERT INTO sent (recipient, subject, message) VALUES (?, ?, ?)")) {
             insertStmt.setString(1, recipientEmail);
             insertStmt.setString(2, subject);

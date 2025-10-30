@@ -41,8 +41,15 @@ public class deletequoteservlet1 extends HttpServlet {
         PreparedStatement stmt = null;
 
         try {
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            con = DriverManager.getConnection(url, user, pass);
 
             if ("softDelete".equals(action)) {
                 // Soft delete: Set yesno_status to 'no'

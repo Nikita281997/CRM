@@ -603,8 +603,16 @@
         }
 
         try {
-        	Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+        	 
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
 
             // Fetch profile data
             String profileQuery = "SELECT full_name, img FROM company_registration1 WHERE company_id = ?";
@@ -690,8 +698,16 @@
                         int previousYear = selectedYear - 1;
 
                         try {
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                            
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
 
                             // Calculate selected year's profit
                             PreparedStatement psSalary = con.prepareStatement("SELECT SUM(salary) AS totalSalary FROM emp WHERE company_id = ? AND YEAR(created_at) = ?");
@@ -906,8 +922,16 @@
                         int open = 0, progress = 0, todo = 0, completed = 0;
 
                         try {
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                             
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
 
                             pstmt = con.prepareStatement("SELECT COUNT(*) FROM open_tasks WHERE company_id = ? AND YEAR(dead_line) = ?");
                             pstmt.setInt(1, companyId);
@@ -1026,8 +1050,16 @@
                         int selectedYearRevenue = Integer.parseInt(request.getParameter("year") != null ? request.getParameter("year") : String.valueOf(LocalDate.now().getYear()));
 
                         try {
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                             
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
                             
                             String query = "SELECT COALESCE(YEAR(f.due_date), 'Unknown') AS year, " +
                                           "COUNT(CASE WHEN t.status = 'delivered' THEN t.lead_id END) AS products_sold, " +
@@ -1251,8 +1283,16 @@
                             <tbody>
                                 <%
                                     try {
-                                        Class.forName("com.mysql.cj.jdbc.Driver");
-                                        con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                         
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
 
                                         PreparedStatement psSalary = con.prepareStatement("SELECT SUM(salary) AS totalSalary FROM emp WHERE company_id = ? AND YEAR(created_at) = ?");
                                         PreparedStatement psServiceCost = con.prepareStatement("SELECT SUM(cost) AS totalCost FROM integrations WHERE company_id = ? AND YEAR(buy_date) = ?");
@@ -1311,8 +1351,16 @@
         <%
             int selectedYearProfit = Integer.parseInt(request.getParameter("year") != null ? request.getParameter("year") : String.valueOf(LocalDate.now().getYear()));
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+               
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
 
                 PreparedStatement psSalary = con.prepareStatement("SELECT SUM(salary) AS totalSalary FROM emp WHERE company_id = ? AND YEAR(created_at) = ?");
                 PreparedStatement psServiceCost = con.prepareStatement("SELECT SUM(cost) AS totalCost FROM integrations WHERE company_id = ? AND YEAR(buy_date) = ?");
@@ -1666,8 +1714,16 @@
                                 int selectedYearMeetings = Integer.parseInt(request.getParameter("year") != null ? request.getParameter("year") : String.valueOf(LocalDate.now().getYear()));
 
                                 try {
-                                    Class.forName("com.mysql.cj.jdbc.Driver");
-                                    con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                     
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
 
                                     LocalDate currentDate = LocalDate.now();
 

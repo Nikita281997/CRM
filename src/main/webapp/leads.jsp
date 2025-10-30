@@ -833,8 +833,15 @@
                     String imgPath = "https://via.placeholder.com/40";
 
                     try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                        String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection(url, user, pass);
 
                         String companyIdStrNav = (String) session.getAttribute("company_id");
                         Integer companyIdNav = null;
@@ -957,8 +964,15 @@
                                     response.sendRedirect("login1.jsp");
                                     return;
                                 }
-                                Class.forName("com.mysql.cj.jdbc.Driver");
-                                conTable = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                                conTable = DriverManager.getConnection(url, user, pass);
                                 String query;
                                 if (showDeleted) {
                                     query = "SELECT * FROM leads WHERE company_id=? AND yesno_status='no' ORDER BY lead_id ASC";
@@ -1220,8 +1234,15 @@
         ResultSet rsNotify = null;
         try {
             if (companyId != null) {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                conNotify = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                conNotify = DriverManager.getConnection(url, user, pass);
                 PreparedStatement psNotify = conNotify.prepareStatement("SELECT lead_id, project_name, emp_name, in_date, status FROM leads WHERE company_id = ? AND in_date IS NOT NULL AND yesno_status = 'yes'");
                 psNotify.setInt(1, companyId);
                 rsNotify = psNotify.executeQuery();

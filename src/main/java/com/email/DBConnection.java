@@ -5,15 +5,23 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-	   private static final String URL = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb"; // Update with your DB details
-	    private static final String USER = "atharva"; // Update with your DB username
-	    private static final String PASSWORD ="AVNS_SFoivcl39tz_B7wqssI"; // Update with your DB password
+	   
     public static Connection getConnection() throws SQLException {
         try {
+             String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection conn = DriverManager.getConnection(url, user, pass);
+            
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        return null;
+        
     }
 }

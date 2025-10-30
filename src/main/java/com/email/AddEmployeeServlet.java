@@ -50,10 +50,19 @@ public class AddEmployeeServlet extends HttpServlet {
         ResultSet phoneResultSet = null;
 
         try {
+              String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            
             // Load database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
             // Establish connection to the database
-            String url = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb";
+            
             String dbUsername = "atharva";
             String dbPassword = "AVNS_SFoivcl39tz_B7wqssI";
             connection = DriverManager.getConnection(url, dbUsername, dbPassword);

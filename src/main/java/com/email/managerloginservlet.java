@@ -32,9 +32,15 @@ public class managerloginservlet extends HttpServlet {
 	            return;
 	        }
 
-	        try {
-	            Class.forName("com.mysql.cj.jdbc.Driver");
-	            try (Connection conn = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI")) {
+	        try {String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+						Connection conn = DriverManager.getConnection(url, user, pass);{
 	                String query = "SELECT unique_id FROM emp WHERE company_id = ? AND unique_id = ?";
 	                try (PreparedStatement pstmt = conn.prepareStatement(query)) {
 	                    pstmt.setInt(1, Integer.parseInt(companyId));

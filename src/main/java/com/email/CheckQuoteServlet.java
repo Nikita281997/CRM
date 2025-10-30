@@ -44,9 +44,15 @@ public class CheckQuoteServlet extends HttpServlet {
         PreparedStatement stmt = null;
         ResultSet rs = null;
 
-        try {
+        try { String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            conn = DriverManager.getConnection(url, user, pass);
 
             // Check if a quote exists for the lead and company
             String sql = "SELECT COUNT(*) FROM quotation WHERE lead_id = ? AND company_id = ?";
@@ -78,6 +84,4 @@ public class CheckQuoteServlet extends HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        }
-    }
-}
+        }}}

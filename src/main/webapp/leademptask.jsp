@@ -593,8 +593,15 @@ card-bg);
         <div class="employee-details">
             <%
                 try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                    vString host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection(url, user, pass);
                     
                     PreparedStatement empStmt = con.prepareStatement("SELECT * FROM emp WHERE unique_id = ?");
                     empStmt.setString(1, uniqueId);
@@ -639,8 +646,15 @@ card-bg);
                         <tbody>
                         <%
                             try {
-                                Class.forName("com.mysql.cj.jdbc.Driver");
-                                con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                               String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                                con = DriverManager.getConnection(url, user, pass);
                                 String query = "SELECT * FROM open_tasks WHERE unique_id = ?";
                                 pst = con.prepareStatement(query);
                                 pst.setString(1, uniqueId);
@@ -716,8 +730,15 @@ card-bg);
                             pst = null;
                             rs = null;
                             try {
-                                Class.forName("com.mysql.cj.jdbc.Driver");
-                                con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                               String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                                con = DriverManager.getConnection(url, user, pass);
                                 String query = "SELECT * FROM in_progress_tasks WHERE unique_id = ?";
                                 pst = con.prepareStatement(query);
                                 pst.setString(1, uniqueId);
@@ -793,8 +814,15 @@ card-bg);
                             pst = null;
                             rs = null;
                             try {
-                                Class.forName("com.mysql.cj.jdbc.Driver");
-                                con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                               String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                                con = DriverManager.getConnection(url, user, pass);
                                 String query = "SELECT * FROM completed_tasks WHERE unique_id = ?";
                                 pst = con.prepareStatement(query);
                                 pst.setString(1, uniqueId);

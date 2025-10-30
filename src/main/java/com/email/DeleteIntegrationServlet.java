@@ -35,8 +35,18 @@ public class DeleteIntegrationServlet extends HttpServlet {
 
         // Database connection and deletion
         String sql = "DELETE FROM integrations WHERE id = ? AND company_id = ?";
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try {
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement stmt = conn.prepareStatement(sql);
+
 
             stmt.setInt(1, id);
             stmt.setInt(2, companyId);
@@ -52,5 +62,11 @@ public class DeleteIntegrationServlet extends HttpServlet {
             e.printStackTrace();
             response.getWriter().println("<script>alert('Error: Database operation failed!'); window.history.back();</script>");
         }
-    }
-}
+        catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            response.getWriter().println("<script>alert('Error: Database driver not found!'); window.history.back();</script>");
+        }
+    } 
+}    
+
+    

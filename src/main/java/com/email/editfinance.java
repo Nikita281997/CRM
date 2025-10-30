@@ -55,8 +55,15 @@ public class editfinance extends HttpServlet {
             int id = Integer.parseInt(recordId);
             double installmentValue = Double.parseDouble(value);
 
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            Connection con = DriverManager.getConnection(url, user, pass);
 
             // ✅ Check if record exists and belongs to the logged-in company, fetch orgamt and previous dates
             String selectQuery = "SELECT installment1, installment2, installment3, quotes_values, addiamt, orgamt, total, date1, date2, " +

@@ -37,8 +37,15 @@
         String jsonString = sb.toString();
         JSONObject data = new JSONObject(jsonString);
 
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+        String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
 
         // Prepare the SQL query to insert into the new table, excluding event_id and created_at
         String query = "INSERT INTO new_calendar_events (company_id, event_name, description, start_date, end_date, start_time, end_time, location) " +

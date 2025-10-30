@@ -8,10 +8,9 @@ import jakarta.servlet.http.*;
 
 public class SaveUserServlet extends HttpServlet {
  
-    private static final String JDBC_URL = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb";
-    private static final String JDBC_USER =  "atharva";
-    private static final String JDBC_PASS = "AVNS_SFoivcl39tz_B7wqssI";
-
+    private static final String JDBC_URL = "jdbc:mysql://<DB_HOST>:<DB_PORT>/<DB_NAME>";
+    private static final String JDBC_USER = "<DB_USER>";
+    private static final String JDBC_PASS = "<DB_PASS>";    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String name = request.getParameter("name");

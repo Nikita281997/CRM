@@ -48,12 +48,16 @@ public class UpdateInstallmentServlet extends HttpServlet {
         PreparedStatement ps = null;
 
         try {
-            // ✅ Load MySQL JDBC Driver
+             
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // ✅ Connect to the database
-            con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
-
+            con = DriverManager.getConnection(url, user, pass);
             // ✅ SQL query to update installment only if company_id matches
             String query = "UPDATE financemanagement SET installment1 = 0 WHERE lead_id = ? AND company_id = ?";
             ps = con.prepareStatement(query);

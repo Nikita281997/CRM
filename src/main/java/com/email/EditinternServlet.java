@@ -43,15 +43,15 @@ public class EditinternServlet extends HttpServlet {
         ResultSet phoneRs = null;
 
         try {
-            // Load database driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
 
-            // Establish connection
-          //  "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI"
-            String url = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb";
-            String dbUsername = "atharva";
-            String dbPassword = "AVNS_SFoivcl39tz_B7wqssI";
-            connection = DriverManager.getConnection(url, dbUsername, dbPassword);
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection(url, user, pass);
 
             // Check if email already exists for another employee in the same company
             String emailCheckQuery = "SELECT empid FROM interns WHERE email = ? AND company_id = ? AND empid != ?";

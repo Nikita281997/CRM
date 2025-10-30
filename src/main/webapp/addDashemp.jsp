@@ -575,8 +575,16 @@
                 ResultSet rsProfile = null;
                 String fullName = "Manager";
                 try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    conProfile = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                     
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                    
                     String query = "SELECT emp_name FROM emp WHERE unique_id = ?";
                     pstmtProfile = conProfile.prepareStatement(query);
                     pstmtProfile.setString(1, uniqueId);
@@ -619,8 +627,16 @@
                     <tbody id="employeeTableBody">
                         <%
                             try {
-                                Class.forName("com.mysql.cj.jdbc.Driver");
-                                Connection con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                 
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                                Connection con = DriverManager.getConnection(url, user, pass);
                                 PreparedStatement ps = con.prepareStatement("SELECT * FROM interns WHERE company_id = ?");
                                 ps.setInt(1, companyId);
                                 ResultSet rs = ps.executeQuery();

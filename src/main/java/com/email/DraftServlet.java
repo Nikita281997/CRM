@@ -14,10 +14,7 @@ import java.sql.ResultSet;
 
 @WebServlet("/DraftServlet")
 public class DraftServlet extends HttpServlet {
-//	"jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI"
-    private static final String DB_URL ="jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb?useSSL=false&serverTimezone=UTC";
-    private static final String DB_USER = "atharva";
-    private static final String DB_PASSWORD = "AVNS_SFoivcl39tz_B7wqssI";
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +37,17 @@ public class DraftServlet extends HttpServlet {
         draftList.append("<div class='container'>");
         draftList.append("<h1>Draft Messages</h1><ul>");
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+        try {
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
             String query = "SELECT recipient, subject, message FROM drafts";
             try (PreparedStatement ps = conn.prepareStatement(query);
                  ResultSet rs = ps.executeQuery()) {

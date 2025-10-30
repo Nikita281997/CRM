@@ -21,9 +21,8 @@ public class qualifiedsent extends HttpServlet {
         if (leadIdParam != null && !leadIdParam.isEmpty()) {
             int leadId = Integer.parseInt(leadIdParam);
 
-            String dbURL = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb";
-            String dbUser = "atharva";
-            String dbPassword = "AVNS_SFoivcl39tz_B7wqssI";
+            
+            
             Connection conn = null;
             PreparedStatement pstmtFetch = null;
             PreparedStatement pstmtInsertQualified = null;
@@ -32,8 +31,15 @@ public class qualifiedsent extends HttpServlet {
             PreparedStatement pstmtUpdateLeads = null;
 
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                conn = DriverManager.getConnection(dbURL, dbUser, dbPassword);
+                String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(url, user, pass);
 
                 // Fetch lead details from 'proposalsent' table
                 String fetchSql = "SELECT * FROM proposalsent WHERE lead_id = ?";

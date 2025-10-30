@@ -56,8 +56,16 @@ public class registerservlet extends HttpServlet {
         PrintWriter out = res.getWriter();
 
         try {
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");          
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            con = DriverManager.getConnection(url, user, pass);
+            
             String insertquery = "INSERT INTO register(fullname, username, email, contact, password, gender, dob, address, city, state, country, zipcode, profile_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             ps = con.prepareStatement(insertquery);
             ps.setString(1, fullname);

@@ -37,9 +37,17 @@ public class addfinalmeeting extends HttpServlet {
         String time = request.getParameter("time");
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+              String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
 
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+            Class.forName("com.mysql.cj.jdbc.Driver");
+           
             // Retrieve in_date and meeting_date from the leads table
             String fetchQuery = "SELECT in_date, meeting_date FROM leads WHERE lead_id = ? AND company_id = ?";
             PreparedStatement fetchPs = con.prepareStatement(fetchQuery);

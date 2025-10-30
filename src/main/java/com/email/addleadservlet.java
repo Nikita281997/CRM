@@ -43,8 +43,17 @@ public class addleadservlet extends HttpServlet {
             return;
         }
 
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI")) {
+        try  {
+             String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, pass);
+        
 
             // Generate 4-digit lead_id: first 2 digits from company_id, next 2 digits sequentially
             String companyIdPrefix = String.format("%02d", companyId % 100); // Take first 2 digits of company_id
@@ -136,6 +145,5 @@ public class addleadservlet extends HttpServlet {
             sessionVar.setAttribute("popupMessage", "Driver not found: " + e.getMessage());
             sessionVar.setAttribute("popupType", "error");
             response.sendRedirect("leads.jsp");
-        }
-    }
-}
+        }}
+    }  

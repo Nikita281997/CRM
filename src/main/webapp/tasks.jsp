@@ -774,9 +774,15 @@ if (companyId == null) {
             String imgPath = "https://via.placeholder.com/40";
 
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                conNav = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
 
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conNav = DriverManager.getConnection(url, user, pass);
                 String query = "SELECT full_name, img FROM company_registration1 WHERE company_id = ?";
                 pstmtNav = conNav.prepareStatement(query);
                 pstmtNav.setInt(1, companyId);
@@ -846,8 +852,15 @@ if (companyId == null) {
                                 PreparedStatement pst = null;
                                 ResultSet rs = null;
                                 try {
-                                    Class.forName("com.mysql.cj.jdbc.Driver");
-                                    con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                   String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
                                     String query = "SELECT * FROM open_tasks WHERE company_id = ?";
                                     pst = con.prepareStatement(query);
                                     pst.setInt(1, companyId);
@@ -939,8 +952,15 @@ if (companyId == null) {
                                 pst = null;
                                 rs = null;
                                 try {
-                                    Class.forName("com.mysql.cj.jdbc.Driver");
-                                    con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                    String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
                                     String query = "SELECT * FROM in_progress_tasks WHERE company_id = ?";
                                     pst = con.prepareStatement(query);
                                     pst.setInt(1, companyId);
@@ -1032,8 +1052,15 @@ if (companyId == null) {
                                 pst = null;
                                 rs = null;
                                 try {
-                                    Class.forName("com.mysql.cj.jdbc.Driver");
-                                    con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                    String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection(url, user, pass);
                                     String query = "SELECT * FROM completed_tasks WHERE company_id = ?";
                                     pst = con.prepareStatement(query);
                                     pst.setInt(1, companyId);
@@ -1127,8 +1154,15 @@ if (companyId == null) {
                         PreparedStatement empPst = null;
                         ResultSet empRs = null;
                         try {
-                            Class.forName("com.mysql.cj.jdbc.Driver");
-                            empCon = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                            empCon = DriverManager.getConnection(url, user, pass);
                             String empQuery = "SELECT unique_id, emp_name, position FROM emp WHERE company_id = ? ORDER BY emp_name";
                             empPst = empCon.prepareStatement(empQuery);
                             empPst.setInt(1, companyId);
@@ -1195,8 +1229,15 @@ Connection conNotif = null;
 PreparedStatement pstNotif = null;
 ResultSet rsNotif = null;
 try {
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    conNotif = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+    String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+    conNotif = DriverManager.getConnection(url, user, pass);
     
     String query = "SELECT task_id, task_name, emp_name, dead_line FROM open_tasks WHERE company_id = ? AND dead_line IS NOT NULL " +
                   "UNION " +

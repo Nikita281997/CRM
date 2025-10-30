@@ -641,8 +641,15 @@
                 String imgPath = "https://via.placeholder.com/40";
 
                 try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    conNav = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                    String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                    conNav = DriverManager.getConnection(url, user, pass);
 
                     String companyIdStrNav = (String) session.getAttribute("company_id");
                     Integer companyIdNav = null;
@@ -729,8 +736,15 @@
                                     out.println("<tr><td colspan='8' class='error-message'>Error: Company ID is missing. Please log in again.</td></tr>");
                                 } else {
                                     try {
-                                        Class.forName("com.mysql.cj.jdbc.Driver");
-                                        conn = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                        String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                                        conn = DriverManager.getConnection(url, user, pass);
 
                                         String query = "SELECT * FROM integrations WHERE company_id = ?";
                                         stmt = conn.prepareStatement(query);

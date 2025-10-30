@@ -1,4 +1,4 @@
-// Replace with your actual package name
+package main.webapp;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,6 +27,7 @@ public class ProposalsentServlet extends HttpServlet {
 
         try {
 
+            
             String host = System.getenv("DB_HOST");
             String port = System.getenv("DB_PORT");
             String dbName = System.getenv("DB_NAME");
@@ -35,9 +36,7 @@ public class ProposalsentServlet extends HttpServlet {
 
             String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            con = DriverManager.getConnection(url, user, pass);
-           
+            conn = DriverManager.getConnection(url, user, pass);
             // Check if lead exists in the 'quotation' table
             String checkQuoteSql = "SELECT COUNT(*) AS count FROM quotation WHERE lead_id = ?";
             stmt = conn.prepareStatement(checkQuoteSql);

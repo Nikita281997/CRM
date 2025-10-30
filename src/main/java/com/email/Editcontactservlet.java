@@ -37,11 +37,15 @@ public class Editcontactservlet extends HttpServlet {
 		PreparedStatement ps = null;
 
 		try {
-			// Load the MySQL JDBC driver
-			Class.forName("com.mysql.cj.jdbc.Driver");
+			String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
 
-			// Establish a connection to the database
-			con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+			con = DriverManager.getConnection(url, user, pass);
 
 			// Prepare the SQL query
 			String sql = "UPDATE contactinfo SET myname = ?, myemail = ?, myphone = ?, myaddress = ? WHERE ID = ?";

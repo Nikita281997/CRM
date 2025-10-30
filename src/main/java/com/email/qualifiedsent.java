@@ -38,9 +38,15 @@ public class qualifiedsent extends HttpServlet {
         ResultSet rs = null, quotationRs = null;
 
         try {
-            // Database connection
+             String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            conn = DriverManager.getConnection(url, user, pass);
 
             // Validate that the lead belongs to the logged-in company
             String checkLeadSql = "SELECT * FROM proposalsent WHERE lead_id = ? AND company_id = ?";

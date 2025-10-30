@@ -17,18 +17,25 @@ import java.util.Properties;
 public class ReceiveEmailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String host = "imap.hostinger.com";
+        String imapHost = "imap.hostinger.com";
         // String username = "rohan@tars.co.in";
         // String password = "Tars@2322";
 
         Properties properties = new Properties();
-        properties.put("mail.imap.host", host);
+        properties.put("mail.imap.host", imapHost);
         properties.put("mail.imap.port", "993");
         properties.put("mail.imap.ssl.enable", "true");
 
         try {
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            Connection con = DriverManager.getConnection(url, user, pass);
             String fetchquery = "SELECT email, password FROM register";
             PreparedStatement ps = con.prepareStatement(fetchquery);
             ResultSet rs = ps.executeQuery();

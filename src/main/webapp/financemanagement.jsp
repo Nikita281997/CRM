@@ -31,8 +31,15 @@ int completedPayments = 0;
 int activeClients = 0;
 
 try {
-    Class.forName("com.mysql.cj.jdbc.Driver");
-    Connection conn = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+    String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+    Connection conn = DriverManager.getConnection(url, user, pass);
     
     String query = "SELECT fm.lead_id, " +
                   "COALESCE(CAST(fm.installment1 AS CHAR), '0') AS installment1, " +
@@ -916,9 +923,15 @@ try {
                 String imgPath = "https://via.placeholder.com/40";
 
                 try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                    String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
 
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection(url, user, pass);
                     String companyIdStr = (String) session.getAttribute("company_id");
                     Integer companyIdNav = null;
 
@@ -1033,8 +1046,15 @@ try {
                         <tbody>
                             <%
                                 try {
-                                    Class.forName("com.mysql.cj.jdbc.Driver");
-                                    Connection conn = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+                                    String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+                                    Connection conn = DriverManager.getConnection(url, user, pass);
                                     
                                     String query = "SELECT q.quote_id, fm.lead_id, fm.orgamt, fm.total, fm.project_name, " + 
                                                   "p.due_date, fm.customer_name, " +

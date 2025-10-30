@@ -13,11 +13,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 @WebServlet("/SaveDraftServlet")
 public class SaveDraftServlet extends HttpServlet {
-	//"jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI"
-    private static final String DB_URL = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb";
-    private static final String DB_USER = "atharva";
-    private static final String DB_PASSWORD =  "AVNS_SFoivcl39tz_B7wqssI";
-   
+	
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
      
@@ -26,7 +22,16 @@ public class SaveDraftServlet extends HttpServlet {
         String message = request.getParameter("message");
         boolean send = Boolean.parseBoolean(request.getParameter("send")); // Check if the message should be sent
         PrintWriter out=response.getWriter();
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+        try { 
+             String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(url, user, pass);
             if (send) {
                 // Insert into sent table
                 String insertSent = "INSERT INTO sent (recipient, subject, message) VALUES (?, ?, ?)";

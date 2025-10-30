@@ -50,8 +50,16 @@ public class UpdateEventServletNew extends HttpServlet {
         PreparedStatement pst = null;
 
         try {
+            
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb", "atharva", "AVNS_SFoivcl39tz_B7wqssI");
+            con = DriverManager.getConnection(url, user, pass);
 
             String query = "UPDATE new_calendar_events SET event_name = ?, description = ?, start_date = ?, end_date = ?, start_time = ?, end_time = ?, location = ? WHERE event_id = ? AND company_id = ?";
             pst = con.prepareStatement(query);

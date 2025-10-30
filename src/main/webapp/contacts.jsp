@@ -97,13 +97,21 @@
         </div>
 
         <%
-            // Load profile info using try-with-resources to ensure proper closing
-            String fullName = "User";
-            String imgPath = request.getContextPath() + "/images/default-profile.jpg";
-            // DB connection values - consider moving to a config file or environment variables
-            String jdbcUrl = "jdbc:mysql://mysql-java-crmpro.b.aivencloud.com:25978/crmprodb";
-            String dbUser = "atharva";
-            String dbPass = "AVNS_SFoivcl39tz_B7wqssI";
+             
+            String host = System.getenv("DB_HOST");
+            String port = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_NAME");
+            String user = System.getenv("DB_USER");
+            String pass = System.getenv("DB_PASS");
+
+            String url = "jdbc:mysql://" + host + ":" + port + "/" + dbName;
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            String jdbcUrl = url;
+            String dbUser = user;   
+            String dbPass = pass;
+            String fullName = "User Name";
+            String imgPath = request.getContextPath() + "/images/default-profile.png"; // default image
+            
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 String query = "SELECT full_name, img FROM company_registration1 WHERE company_id = ?";
